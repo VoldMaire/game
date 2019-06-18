@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-    entry: "./src/helloworld.ts",
+    entry: "./src/Application.ts",
     output: {
         filename: "./dist/bundle.js",
     },
