@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { VelocitySprite } from './VelocitySprite';
+import { Rocket } from '../objects/Rocket'
+import { KeyboardController } from '../control/KeyboardController';
 
 export class GraphicEngine {
     static app = new PIXI.Application({ width: 1024,
@@ -16,13 +18,11 @@ export class GraphicEngine {
     } 
 
     setup():void {
-        let rocketSprite = new VelocitySprite(PIXI.loader.resources["images/cat.png"].texture);
-        
-        rocketSprite.vx = 1;
-        rocketSprite.vy = 0;
-        rocketSprite.scale.set(0.5,0.5);
-        GraphicEngine.app.stage.addChild(rocketSprite);
-        GraphicEngine.app.ticker.add(() => rocketSprite.move());
+        let rocketController = new KeyboardController();
+        let rocket = new Rocket();
+        rocket.appendController(rocketController);
+        GraphicEngine.app.stage.addChild(rocket.sprite);
+        GraphicEngine.app.ticker.add(() => rocket.sprite.move());
     }
 
 }
