@@ -13,8 +13,8 @@ export class GraphicEngine {
     public run() {
         console.log("run....");
         document.body.appendChild(GraphicEngine.app.view);
-        PIXI.loader.add("images/cat.png");
-        PIXI.loader.load(this.setup);
+        PIXI.Loader.shared.add("images/cat.png");
+        PIXI.Loader.shared.load(this.setup);
     } 
 
     setup():void {
