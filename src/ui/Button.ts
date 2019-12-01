@@ -16,21 +16,24 @@ export class Button {
     overSubscribers: Array<ISubscriber>;
     outSubscribers: Array<ISubscriber>;
 
-    constructor(mainTexture: string, pointerDownTexture: string);
-
-    constructor(mainTexture: string, pointerDownTexture: string, pointerOnTexture?: string) {
+    constructor(mainTexture: string, pointerDownTexture: string, pointerOnTexture: string) {
         this.textureMain = PIXI.Loader.shared.resources[mainTexture].texture;
         this.texturePointerDown = PIXI.Loader.shared.resources[pointerDownTexture].texture;
-        this.texturePointerOn = PIXI.Loader.shared.resources[pointerOnTexture].texture || this.textureMain;
+        this.texturePointerOn = PIXI.Loader.shared.resources[pointerOnTexture].texture; 
         this.sprite = new PIXI.Sprite(this.textureMain);
         this.sprite.interactive = true;
         this.sprite.buttonMode = true;
 
         this.sprite
-            .on("pointerdown", this.onDown)
-            .on('pointerup', this.onUp)
-            .on('pointerover', this.onOver)
-            .on('pointerout', this.onOut);
+            .on("pointerdown", () => this.onDown(this))
+            .on('pointerup', () => this.onUp(this))
+            .on('pointerover', () => this.onOver(this))
+            .on('pointerout', () => this.onOut(this));
+
+        this.downSubscribers = [];
+        this.upSubscribers = [];
+        this.overSubscribers = [];
+        this.outSubscribers = [];
     }
 
     public subscribeDown(subscriber: ISubscriber) {
@@ -45,37 +48,37 @@ export class Button {
         this.overSubscribers.push(subscriber);
     }
 
-    private onDown() {
-        this.isDown = true;
-        this.sprite.texture = this.texturePointerDown;
+    private onDown(button: Button) {
+        button.isDown = true;
+        button.sprite.texture = button.texturePointerDown;
 
-        this.downSubscribers.forEach(s=>s.notify(this));
+        button.downSubscribers.forEach(s=>s.notify(button));
     }
 
-    private onUp() {
-        this.isDown = false;
-        this.sprite.texture = this.textureMain;
+    private onUp(button: Button) {
+        button.isDown = false;
+        button.sprite.texture = button.textureMain;
 
-        this.upSubscribers.forEach(s=>s.notify(this));
+        button.upSubscribers.forEach(s=>s.notify(button));
     }
 
-    private onOver() {
-        this.isOver = true;
-        if(this.isDown) {
+    private onOver(button: Button) {
+        button.isOver = true;
+        if(button.isDown) {
             return;
         }
-        this.sprite.texture = this.texturePointerOn;
+        button.sprite.texture = button.texturePointerOn;
 
-        this.overSubscribers.forEach(s=>s.notify(this));
+        button.overSubscribers.forEach(s=>s.notify(button));
     }
 
-    private onOut() {
-        this.isOver = true;
-        if(this.isDown) {
+    private onOut(button: Button) {
+        button.isOver = true;
+        if(button.isDown) {
             return;
         }
-        this.sprite.texture = this.texturePointerOn;
+        button.sprite.texture = button.texturePointerOn;
 
-        this.outSubscribers.forEach(s=>s.notify(this));
+        button.outSubscribers.forEach(s=>s.notify(button));
     }
 }

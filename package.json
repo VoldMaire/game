@@ -4,7 +4,7 @@
   "description": "",
   "main": "./dist/bundle.js",
   "scripts": {
-    "webpack": "webpack",
+    "compile": "webpack",
     "lite": "lite-server",
     "start": "concurrently \"webpack\"  \"npm run lite\"",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,13 +16,14 @@
   },
   "devDependencies": {
     "brfs": "^1.4.3",
+    "concurrently": "^4.1.0",
+    "lite-server": "^2.5.3",
     "source-map-loader": "^0.2.4",
     "transform-loader": "^0.2.4",
     "ts-loader": "^6.0.2",
     "typescript": "^3.5.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.3.3",
-    "concurrently": "^4.1.0",
-    "lite-server": "^2.5.3"
+    "webpack-merge": "^4.2.2"
   }
 }
