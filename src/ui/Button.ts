@@ -25,10 +25,11 @@ export class Button {
         this.sprite.buttonMode = true;
 
         this.sprite
-            .on("pointerdown", () => this.onDown(this))
+            .on('pointerdown', () => this.onDown(this))
             .on('pointerup', () => this.onUp(this))
-            .on('pointerover', () => this.onOver(this))
-            .on('pointerout', () => this.onOut(this));
+            .on('pointermove', () => this.onOver(this))
+            .on('pointerout', () => this.onOut(this))
+            .on('mouseupoutside', () => this.onUpOutside(this));
 
         this.downSubscribers = [];
         this.upSubscribers = [];
@@ -62,6 +63,11 @@ export class Button {
         button.upSubscribers.forEach(s=>s.notify(button));
     }
 
+    private onUpOutside(button: Button) {
+        button.isDown = false;
+        button.sprite.texture = button.textureMain;
+    }
+
     private onOver(button: Button) {
         button.isOver = true;
         if(button.isDown) {
@@ -77,7 +83,7 @@ export class Button {
         if(button.isDown) {
             return;
         }
-        button.sprite.texture = button.texturePointerOn;
+        button.sprite.texture = button.textureMain;
 
         button.outSubscribers.forEach(s=>s.notify(button));
     }
