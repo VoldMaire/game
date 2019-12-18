@@ -27,7 +27,7 @@ export class Button {
         this.sprite
             .on('pointerdown', () => this.onDown(this))
             .on('pointerup', () => this.onUp(this))
-            .on('pointermove', () => this.onOver(this))
+            .on('pointerover', () => this.onOver(this))
             .on('pointerout', () => this.onOut(this))
             .on('mouseupoutside', () => this.onUpOutside(this));
 
@@ -79,7 +79,7 @@ export class Button {
     }
 
     private onOut(button: Button) {
-        button.isOver = true;
+        button.isOver = false;
         if(button.isDown) {
             return;
         }
