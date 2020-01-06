@@ -2,19 +2,19 @@ import * as PIXI from 'pixi.js';
 import { ISubscriber } from './ISubscriber';
 
 export class Button {
-    textureMain: PIXI.Texture;
-    texturePointerDown: PIXI.Texture;
-    texturePointerOn: PIXI.Texture;
+    private textureMain: PIXI.Texture;
+    private texturePointerDown: PIXI.Texture;
+    private texturePointerOn: PIXI.Texture;
     sprite: PIXI.Sprite;
 
-    isActive: boolean;
-    isDown: boolean;
-    isOver: boolean;
+    private isActive: boolean;
+    private isDown: boolean;
+    private isOver: boolean;
 
-    downSubscribers: Array<ISubscriber>;
-    upSubscribers: Array<ISubscriber>;
-    overSubscribers: Array<ISubscriber>;
-    outSubscribers: Array<ISubscriber>;
+    private downSubscribers: Array<ISubscriber>;
+    private upSubscribers: Array<ISubscriber>;
+    private overSubscribers: Array<ISubscriber>;
+    private outSubscribers: Array<ISubscriber>;
 
     constructor(mainTexture: string, pointerDownTexture: string, pointerOnTexture: string) {
         this.textureMain = PIXI.Loader.shared.resources[mainTexture].texture;
@@ -35,6 +35,11 @@ export class Button {
         this.upSubscribers = [];
         this.overSubscribers = [];
         this.outSubscribers = [];
+    }
+
+    public setLocation(x: number, y: number) {
+        this.sprite.x = x;
+        this.sprite.y = y;
     }
 
     public subscribeDown(subscriber: ISubscriber) {
