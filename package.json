@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "pixi.js": "^5.0.1"
+    "pixi.js": "^5.0.1",
+    "rxjs": "^6.5.4"
   },
   "devDependencies": {
     "brfs": "^1.4.3",
