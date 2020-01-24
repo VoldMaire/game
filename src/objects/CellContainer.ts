@@ -10,27 +10,23 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
     private spriteOwner: PIXI.Sprite;
     private spriteActiveOverlay: PIXI.Sprite;
     private spriteContainer: PIXI.Container;
-    private sprites: Array<PIXI.Sprite>;
 
     public constructor(width: number, height: number, x: number, y: number) {
-        this.sprites = [];
         this.spriteContainer = new PIXI.Container();
         this.spriteBackground = new PIXI.Sprite(PIXI.Loader.shared.resources[GraphicConf.cellBackground].texture);
         this.spriteContainer.addChild(this.spriteBackground);
-        this.sprites.push(this.spriteBackground);
         this.spriteOwner = new PIXI.Sprite(PIXI.Loader.shared.resources[GraphicConf.friendlyBackground].texture);
         this.spriteOwner.visible = false;
         this.spriteContainer.addChild(this.spriteOwner);
-        this.sprites.push(this.spriteOwner);
         this.spriteElement = new PIXI.Sprite();
         this.spriteElement.visible = false;    
-        this.sprites.push(this.spriteElement);
         this.spriteContainer.addChild(this.spriteElement); 
         this.spriteActiveOverlay = new PIXI.Sprite(PIXI.Loader.shared.resources[GraphicConf.cellOverOverlay].texture);
         this.spriteActiveOverlay.visible = false;
         this.spriteContainer.addChild(this.spriteActiveOverlay);
         this.spriteContainer.hitArea = new Rectangle(width, height, x, y);
-        this.sprites.forEach(element => this.setPosition(element, x, y));
+        this.spriteContainer.position.set(x, y);
+        //this.sprites.forEach(element => this.setPosition(element, x, y));
     }
 
     private setPosition(sprite: PIXI.Sprite, x: number, y: number) {
