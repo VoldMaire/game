@@ -2,6 +2,9 @@ import * as PIXI from 'pixi.js';
 import { PlayMapController } from '../objects/PlayMapController';
 import { GraphicConf } from '../conf/GraphicConf';
 import { ButtonCell } from '../objects/ButtonCell';
+import { Message } from '../model/Message';
+import { CellDto } from '../model/CellDto';
+import { Element } from '../model/Element';
 
 export class GraphicEngine {
     static app = new PIXI.Application({ width: 1024,
@@ -19,12 +22,9 @@ export class GraphicEngine {
         PIXI.Loader.shared.add(GraphicConf.airElement);
         PIXI.Loader.shared.add(GraphicConf.earthElement);
         PIXI.Loader.shared.add(GraphicConf.cellOverOverlay);
+        PIXI.Loader.shared.add(GraphicConf.cellDownOverlay);
         PIXI.Loader.shared.add(GraphicConf.friendlyBackground);
         PIXI.Loader.shared.add(GraphicConf.enemyBackground);
-        // PIXI.Loader.shared.add("images/res_90x90/cat.png");
-        // PIXI.Loader.shared.add("images/res_90x90/idle.png");
-        // PIXI.Loader.shared.add("images/res_90x90/over.png");
-        // PIXI.Loader.shared.add("images/res_90x90/click.png");
         PIXI.Loader.shared.load(this.setup);
     } 
 
@@ -32,10 +32,28 @@ export class GraphicEngine {
         GraphicEngine.initPlayDesk();
     }
     
+    //TODO remove after message system finish
+    static getTestMessage(): Message {
+        var message: Message = new Message();
+        message.cells = [];
+        for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 6; j++) {
+                var cellDto: CellDto = new CellDto();
+                cellDto.cellId = i * 10 + j;
+                cellDto.element = j < 2 || j > 3
+                    ? i % 2 == 0 ? Element.EARTH : Element.AIR
+                    : Element.EMPTY;
+                message.cells.push(cellDto);
+            }
+        }
+        return message;
+    }
+
     static initPlayDesk(): void {
         var cells:Array<ButtonCell> = PlayMapController.getInstance().getCells(8, 6);
         cells.forEach(element => {
             GraphicEngine.app.stage.addChild(element.getContainer());            
         });
+        PlayMapController.getInstance().applyMessage(GraphicEngine.getTestMessage());
     }
 }

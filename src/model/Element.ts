@@ -3,5 +3,5 @@ export enum Element {
     FIRE = 1,
     WATER = 2,
     AIR = 3,
-    GROUND = 4
+    EARTH = 4
 }

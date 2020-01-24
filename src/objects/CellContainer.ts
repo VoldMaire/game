@@ -24,14 +24,7 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
         this.spriteActiveOverlay = new PIXI.Sprite(PIXI.Loader.shared.resources[GraphicConf.cellOverOverlay].texture);
         this.spriteActiveOverlay.visible = false;
         this.spriteContainer.addChild(this.spriteActiveOverlay);
-        this.spriteContainer.hitArea = new Rectangle(width, height, x, y);
         this.spriteContainer.position.set(x, y);
-        //this.sprites.forEach(element => this.setPosition(element, x, y));
-    }
-
-    private setPosition(sprite: PIXI.Sprite, x: number, y: number) {
-        sprite.x = x;
-        sprite.y = y;
     }
 
     public getSpriteContainer(): PIXI.Container {
@@ -55,6 +48,7 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
     }
 
     public pointerUpOutsideApply() {
+        this.spriteActiveOverlay.texture = PIXI.Loader.shared.resources[GraphicConf.cellOverOverlay].texture;
         this.spriteActiveOverlay.visible = false;
     }
 
@@ -72,17 +66,21 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
     
     public setAir() {
         this.spriteElement.texture = PIXI.Loader.shared.resources[GraphicConf.airElement].texture;
+        this.spriteElement.visible = true;
     }
 
     public setFire() {
         this.spriteElement.texture = PIXI.Loader.shared.resources[GraphicConf.fireElement].texture;
+        this.spriteElement.visible = true;
     }
 
     public setEarth() {
         this.spriteElement.texture = PIXI.Loader.shared.resources[GraphicConf.fireElement].texture;
+        this.spriteElement.visible = true;
     }
 
     public setWater() {
         this.spriteElement.texture = PIXI.Loader.shared.resources[GraphicConf.waterElement].texture;
+        this.spriteElement.visible = true;
     }
 }

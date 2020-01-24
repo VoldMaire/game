@@ -33,8 +33,8 @@ export class PlayMapController {
     }
 
     public applyMessage(message: Message): void {
-        this.cells.forEach(element => {
-            
-        });
+        for(var i = 0; i < this.cells.length; i++) {
+            this.cells[i].setElement(message.cells[i].element);
+        }
     }
 }

@@ -1,8 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { ISubscriber } from './ISubscriber';
-import { GraphicConf } from '../conf/GraphicConf';
-import { IButtonEventContainer } from '../ui/IButtonEventContainer';
 import { CellContainer } from './CellContainer';
+import { Element } from '../model/Element';
 
 export class ButtonCell {
     private container: CellContainer;
@@ -18,7 +17,10 @@ export class ButtonCell {
 
     constructor(width: number, height: number, x: number, y: number) {
         this.container = new CellContainer(width, height, x, y);
-        this.container.getSpriteContainer()
+
+        var container = this.container.getSpriteContainer();
+        container.interactive = true;
+        container
             .on('pointerdown', () => this.onDown(this))
             .on('pointerup', () => this.onUp(this))
             .on('pointerover', () => this.onOver(this))
@@ -29,6 +31,22 @@ export class ButtonCell {
         this.upSubscribers = [];
         this.overSubscribers = [];
         this.outSubscribers = [];
+    }
+
+    public setElement(element: Element) {
+        switch(element) {
+            case Element.EMPTY: this.container.setEmpty();
+            return;
+            case Element.AIR: this.container.setAir();
+            return;
+            case Element.FIRE: this.container.setFire();
+            return;
+            case Element.EARTH: this.container.setEarth();
+            return;
+            case Element.WATER: this.container.setWater();
+            return;
+            default: throw new Error('Server error. Element ' + element + ' doesn\'t exist');
+        }
     }
 
     public getContainer(): PIXI.Container {
