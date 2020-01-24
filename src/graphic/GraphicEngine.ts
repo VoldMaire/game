@@ -1,10 +1,7 @@
 import * as PIXI from 'pixi.js';
-import { VelocitySprite } from './VelocitySprite';
-import { Rocket } from '../objects/Rocket'
-import { KeyboardController } from '../control/KeyboardController';
-import { Button } from '../ui/Button';
 import { PlayMapController } from '../objects/PlayMapController';
-import { ISubscriber } from '../ui/ISubscriber';
+import { GraphicConf } from '../conf/GraphicConf';
+import { ButtonCell } from '../objects/ButtonCell';
 
 export class GraphicEngine {
     static app = new PIXI.Application({ width: 1024,
@@ -16,10 +13,18 @@ export class GraphicEngine {
     public run() {
         console.log("run....");
         document.body.appendChild(GraphicEngine.app.view);
-        PIXI.Loader.shared.add("images/res_90x90/cat.png");
-        PIXI.Loader.shared.add("images/res_90x90/idle.png");
-        PIXI.Loader.shared.add("images/res_90x90/over.png");
-        PIXI.Loader.shared.add("images/res_90x90/click.png");
+        PIXI.Loader.shared.add(GraphicConf.cellBackground);
+        PIXI.Loader.shared.add(GraphicConf.fireElement);
+        PIXI.Loader.shared.add(GraphicConf.waterElement);
+        PIXI.Loader.shared.add(GraphicConf.airElement);
+        PIXI.Loader.shared.add(GraphicConf.earthElement);
+        PIXI.Loader.shared.add(GraphicConf.cellOverOverlay);
+        PIXI.Loader.shared.add(GraphicConf.friendlyBackground);
+        PIXI.Loader.shared.add(GraphicConf.enemyBackground);
+        // PIXI.Loader.shared.add("images/res_90x90/cat.png");
+        // PIXI.Loader.shared.add("images/res_90x90/idle.png");
+        // PIXI.Loader.shared.add("images/res_90x90/over.png");
+        // PIXI.Loader.shared.add("images/res_90x90/click.png");
         PIXI.Loader.shared.load(this.setup);
     } 
 
@@ -28,9 +33,9 @@ export class GraphicEngine {
     }
     
     static initPlayDesk(): void {
-        var cells:Array<Button> = PlayMapController.getInstance().getCells(8, 6);
+        var cells:Array<ButtonCell> = PlayMapController.getInstance().getCells(8, 6);
         cells.forEach(element => {
-            GraphicEngine.app.stage.addChild(element.sprite);            
+            GraphicEngine.app.stage.addChild(element.getContainer());            
         });
     }
 }
