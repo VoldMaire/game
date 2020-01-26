@@ -5,6 +5,7 @@ import { ButtonCell } from '../objects/ButtonCell';
 import { Message } from '../model/Message';
 import { CellDto } from '../model/CellDto';
 import { Element } from '../model/Element';
+import { Owner } from '../model/Owner';
 
 export class GraphicEngine {
     static app = new PIXI.Application({ width: 1024,
@@ -43,6 +44,9 @@ export class GraphicEngine {
                 cellDto.element = j < 2 || j > 3
                     ? i % 2 == 0 ? Element.EARTH : Element.AIR
                     : Element.EMPTY;
+                cellDto.owner = j < 2 ? Owner.ENEMY 
+                              : j > 3 ? Owner.FRIEND
+                                      : Owner.NONE; 
                 message.cells.push(cellDto);
             }
         }

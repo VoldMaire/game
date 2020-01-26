@@ -1,7 +1,7 @@
 import { GraphicConf } from "../conf/GraphicConf"
 import { IButtonEventContainer } from "../ui/IButtonEventContainer";
 import { IElementContainer } from "./IElementContainer";
-import { Rectangle, Sprite } from "pixi.js";
+import { Owner } from "../model/Owner";
 
 export class CellContainer implements IButtonEventContainer, IElementContainer {
 
@@ -52,11 +52,21 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
         this.spriteActiveOverlay.visible = false;
     }
 
-    public setOwner(friendly: boolean) {
-        if(friendly) {
-            this.spriteOwner.texture = PIXI.Loader.shared.resources[GraphicConf.friendlyBackground].texture;
-        } else {
-            this.spriteOwner.texture = PIXI.Loader.shared.resources[GraphicConf.enemyBackground].texture;
+    public setOwner(owner: Owner) {
+        switch(owner) {
+            case Owner.NONE:
+                this.spriteOwner.visible = false;
+                return;
+            case Owner.FRIEND: 
+                this.spriteOwner.texture = PIXI.Loader.shared.resources[GraphicConf.friendlyBackground].texture;
+                this.spriteOwner.visible = true;
+                return;
+            case Owner.ENEMY:
+                this.spriteOwner.texture = PIXI.Loader.shared.resources[GraphicConf.enemyBackground].texture;
+                this.spriteOwner.visible = true;
+                return;
+            default: 
+                throw new Error("Server error, such owner doesn't exist");
         }
     }
 

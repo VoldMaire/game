@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import { ISubscriber } from './ISubscriber';
 import { CellContainer } from './CellContainer';
 import { Element } from '../model/Element';
+import { CellDto } from '../model/CellDto';
 
 export class ButtonCell {
     private container: CellContainer;
@@ -33,7 +34,12 @@ export class ButtonCell {
         this.outSubscribers = [];
     }
 
-    public setElement(element: Element) {
+    public setCellDto(cellDto: CellDto): void {
+        this.setElement(cellDto.element);
+        this.container.setOwner(cellDto.owner);
+    }
+
+    private setElement(element: Element) {
         switch(element) {
             case Element.EMPTY: this.container.setEmpty();
             return;
