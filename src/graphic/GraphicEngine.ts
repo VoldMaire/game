@@ -1,6 +1,5 @@
 import * as PIXI from 'pixi.js';
 import { PlayMapController } from '../objects/PlayMapController';
-import { GraphicConf } from '../conf/GraphicConf';
 import { ButtonCell } from '../objects/ButtonCell';
 import { Message } from '../model/Message';
 import { CellDto } from '../model/CellDto';
@@ -17,15 +16,7 @@ export class GraphicEngine {
     public run() {
         console.log("run....");
         document.body.appendChild(GraphicEngine.app.view);
-        PIXI.Loader.shared.add(GraphicConf.cellBackground);
-        PIXI.Loader.shared.add(GraphicConf.fireElement);
-        PIXI.Loader.shared.add(GraphicConf.waterElement);
-        PIXI.Loader.shared.add(GraphicConf.airElement);
-        PIXI.Loader.shared.add(GraphicConf.earthElement);
-        PIXI.Loader.shared.add(GraphicConf.cellOverOverlay);
-        PIXI.Loader.shared.add(GraphicConf.cellDownOverlay);
-        PIXI.Loader.shared.add(GraphicConf.friendlyBackground);
-        PIXI.Loader.shared.add(GraphicConf.enemyBackground);
+        PIXI.Loader.shared.add("/images/res_90x90/cellmap.json")
         PIXI.Loader.shared.load(this.setup);
     } 
 

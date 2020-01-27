@@ -4,7 +4,6 @@ export class VelocitySprite extends PIXI.Sprite {
     vx: number;
     vy: number;
 
-    constructor(texture?: PIXI.Texture);
     constructor(texture?: PIXI.Texture, vx?: number, vy?: number) {
         super(texture);
         this.vx = vx || 0;

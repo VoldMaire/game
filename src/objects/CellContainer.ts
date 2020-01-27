@@ -13,15 +13,15 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
 
     public constructor(width: number, height: number, x: number, y: number) {
         this.spriteContainer = new PIXI.Container();
-        this.spriteBackground = new PIXI.Sprite(PIXI.Loader.shared.resources[GraphicConf.cellBackground].texture);
+        this.spriteBackground = new PIXI.Sprite(PIXI.utils.TextureCache[GraphicConf.cellBackground]);
         this.spriteContainer.addChild(this.spriteBackground);
-        this.spriteOwner = new PIXI.Sprite(PIXI.Loader.shared.resources[GraphicConf.friendlyBackground].texture);
+        this.spriteOwner = new PIXI.Sprite(PIXI.utils.TextureCache[GraphicConf.friendlyBackground]);
         this.spriteOwner.visible = false;
         this.spriteContainer.addChild(this.spriteOwner);
         this.spriteElement = new PIXI.Sprite();
         this.spriteElement.visible = false;    
         this.spriteContainer.addChild(this.spriteElement); 
-        this.spriteActiveOverlay = new PIXI.Sprite(PIXI.Loader.shared.resources[GraphicConf.cellOverOverlay].texture);
+        this.spriteActiveOverlay = new PIXI.Sprite(PIXI.utils.TextureCache[GraphicConf.cellOverOverlay]);
         this.spriteActiveOverlay.visible = false;
         this.spriteContainer.addChild(this.spriteActiveOverlay);
         this.spriteContainer.position.set(x, y);
@@ -40,15 +40,15 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
     }
 
     public pointerDownApply() {
-        this.spriteActiveOverlay.texture = PIXI.Loader.shared.resources[GraphicConf.cellDownOverlay].texture;
+        this.spriteActiveOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellDownOverlay];
     }
 
     public pointerUpApply() {
-        this.spriteActiveOverlay.texture = PIXI.Loader.shared.resources[GraphicConf.cellOverOverlay].texture;
+        this.spriteActiveOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellOverOverlay];
     }
 
     public pointerUpOutsideApply() {
-        this.spriteActiveOverlay.texture = PIXI.Loader.shared.resources[GraphicConf.cellOverOverlay].texture;
+        this.spriteActiveOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellOverOverlay];
         this.spriteActiveOverlay.visible = false;
     }
 
@@ -58,11 +58,11 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
                 this.spriteOwner.visible = false;
                 return;
             case Owner.FRIEND: 
-                this.spriteOwner.texture = PIXI.Loader.shared.resources[GraphicConf.friendlyBackground].texture;
+                this.spriteOwner.texture = PIXI.utils.TextureCache[GraphicConf.friendlyBackground];
                 this.spriteOwner.visible = true;
                 return;
             case Owner.ENEMY:
-                this.spriteOwner.texture = PIXI.Loader.shared.resources[GraphicConf.enemyBackground].texture;
+                this.spriteOwner.texture = PIXI.utils.TextureCache[GraphicConf.enemyBackground];
                 this.spriteOwner.visible = true;
                 return;
             default: 
@@ -75,22 +75,22 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
     }
     
     public setAir() {
-        this.spriteElement.texture = PIXI.Loader.shared.resources[GraphicConf.airElement].texture;
+        this.spriteElement.texture = PIXI.utils.TextureCache[GraphicConf.airElement];
         this.spriteElement.visible = true;
     }
 
     public setFire() {
-        this.spriteElement.texture = PIXI.Loader.shared.resources[GraphicConf.fireElement].texture;
+        this.spriteElement.texture = PIXI.utils.TextureCache[GraphicConf.fireElement];
         this.spriteElement.visible = true;
     }
 
     public setEarth() {
-        this.spriteElement.texture = PIXI.Loader.shared.resources[GraphicConf.fireElement].texture;
+        this.spriteElement.texture = PIXI.utils.TextureCache[GraphicConf.fireElement];
         this.spriteElement.visible = true;
     }
 
     public setWater() {
-        this.spriteElement.texture = PIXI.Loader.shared.resources[GraphicConf.waterElement].texture;
+        this.spriteElement.texture = PIXI.utils.TextureCache[GraphicConf.waterElement];
         this.spriteElement.visible = true;
     }
 }
