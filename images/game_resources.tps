@@ -177,7 +177,7 @@
             <key>defaultPivotPoint</key>
             <point_f>0,0</point_f>
             <key>writePivotPoints</key>
-            <false/>
+            <true/>
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
@@ -204,6 +204,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">basic/downed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.494,0.484</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>125,125,250,250</rect>
+                <key>scale9Paddings</key>
+                <rect>125,125,250,250</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -216,6 +231,7 @@
             <filename>basic/fire.png</filename>
             <filename>basic/friendly_background.png</filename>
             <filename>basic/water.png</filename>
+            <filename>basic/downed.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
