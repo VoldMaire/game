@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { ISubscriber } from './ISubscriber';
+import { ISubscriber } from './subscriber/ISubscriber';
 import { CellContainer } from './CellContainer';
 import { Element } from '../model/Element';
 import { CellDto } from '../model/CellDto';
@@ -57,6 +57,10 @@ export class ButtonCell {
 
     public getContainer(): PIXI.Container {
         return this.container.getSpriteContainer();
+    }
+
+    public setActive(isActive: boolean) {
+        this.container.setActive(isActive);
     }
 
     public subscribeDown(subscriber: ISubscriber) {

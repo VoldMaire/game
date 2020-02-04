@@ -1,14 +1,15 @@
 import { Button } from '../ui/Button';
 import { ButtonCell } from './ButtonCell'
-import { ButtonFabric } from '../utils/ButtonFabric';
 import { Message } from '../model/Message'
+import { DownSubscriber } from './subscriber/DownSubscriber';
 
 export class PlayMapController {
     public static instance: PlayMapController;
-    private cells: Array<ButtonCell>;
-    private activeCell: Button;
-    private readonly WIDTH = 91;
+    private activeCell: ButtonCell;
 
+    private cells: Array<ButtonCell>;
+    private readonly WIDTH = 91;
+    
     private constructor() { }
 
     public static getInstance(): PlayMapController {
@@ -24,12 +25,22 @@ export class PlayMapController {
             this.cells = [];
             for(var i = 0; i < rows; i++) {
                 for(var j = 0; j < columns; j++){
-                    let btn = new ButtonCell(this.WIDTH, this.WIDTH, i*this.WIDTH, j*this.WIDTH);//ButtonFabric.createStandardButton();
+                    let btn = new ButtonCell(this.WIDTH, this.WIDTH, i*this.WIDTH, j*this.WIDTH);
+                    let subscriber = new DownSubscriber();
+                    btn.subscribeDown(subscriber);
                     this.cells.push(btn);
                 }
             }
         }
         return this.cells;
+    }
+
+    public setActiveButton(button: ButtonCell) {
+        if(this.activeCell) {
+            this.activeCell.setActive(false);
+        }
+        button.setActive(true);
+        this.activeCell = button;
     }
 
     public applyMessage(message: Message): void {

@@ -8,7 +8,8 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
     private spriteBackground: PIXI.Sprite;
     private spriteElement: PIXI.Sprite;
     private spriteOwner: PIXI.Sprite;
-    private spriteActiveOverlay: PIXI.Sprite;
+    private spriteOverlay: PIXI.Sprite;
+    private spriteIsActive: PIXI.Container;
     private spriteContainer: PIXI.Container;
 
     public constructor(width: number, height: number, x: number, y: number) {
@@ -21,9 +22,12 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
         this.spriteElement = new PIXI.Sprite();
         this.spriteElement.visible = false;    
         this.spriteContainer.addChild(this.spriteElement); 
-        this.spriteActiveOverlay = new PIXI.Sprite(PIXI.utils.TextureCache[GraphicConf.cellOverOverlay]);
-        this.spriteActiveOverlay.visible = false;
-        this.spriteContainer.addChild(this.spriteActiveOverlay);
+        this.spriteIsActive = new PIXI.Sprite(PIXI.utils.TextureCache[GraphicConf.cellDownOverlay]);
+        this.spriteIsActive.visible = false;
+        this.spriteContainer.addChild(this.spriteIsActive);
+        this.spriteOverlay = new PIXI.Sprite(PIXI.utils.TextureCache[GraphicConf.cellOverOverlay]);
+        this.spriteOverlay.visible = false;
+        this.spriteContainer.addChild(this.spriteOverlay);
         this.spriteContainer.position.set(x, y);
     }
 
@@ -32,25 +36,29 @@ export class CellContainer implements IButtonEventContainer, IElementContainer {
     }
 
     public pointerOverApply() {
-        this.spriteActiveOverlay.visible = true;
+        this.spriteOverlay.visible = true;
     }
 
     public pointerOutApply() {
-        this.spriteActiveOverlay.visible = false;
+        this.spriteOverlay.visible = false;
     }
 
     public pointerDownApply() {
-        this.spriteActiveOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellDownOverlay];
+        this.spriteOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellDownOverlay];
     }
 
     public pointerUpApply() {
-        this.spriteActiveOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellOverOverlay];
+        this.spriteOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellOverOverlay];
     }
 
     public pointerUpOutsideApply() {
-        this.spriteActiveOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellOverOverlay];
-        this.spriteActiveOverlay.visible = false;
+        this.spriteOverlay.texture = PIXI.utils.TextureCache[GraphicConf.cellOverOverlay];
+        this.spriteOverlay.visible = false;
     }
+
+    public setActive(isActive: boolean): void {
+        this.spriteIsActive.visible = isActive;
+    } 
 
     public setOwner(owner: Owner) {
         switch(owner) {
